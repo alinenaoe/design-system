@@ -1,17 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { ThemeProvider } from 'styled-components';
+import { PrimaryButton, SecondaryButton, TertiaryButton, SignUpModal } from './components';
+import { GlobalStyle, darkTheme, defaultTheme } from './utils';
+
+const App = () => {
+  const [useDarkTheme, setUseDarkTheme] = useState(false);
+
+  return (
+    <ThemeProvider theme={useDarkTheme ? darkTheme : defaultTheme}>
+      <button 
+        style={{ margin: "0 16px 24px", padding: "8px", background: "none" }}
+        onClick={() => setUseDarkTheme(true)}
+      >
+        Dark theme
+      </button>
+      <button 
+        style={{ margin: "0 16px 24px", padding: "8px", background: "none" }}
+        onClick={() => setUseDarkTheme(false)}
+      >
+        Default theme
+      </button>
+
+      <div style={{
+        background: useDarkTheme ? defaultTheme.primaryColor : darkTheme.primaryColor,
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-around"
+      }}>
+      {/* <PrimaryButton>
+        Hello world
+      </PrimaryButton>
+      <SecondaryButton>
+        Goodbye world
+      </SecondaryButton>
+      <TertiaryButton>
+        Hey world
+      </TertiaryButton> */}
+      <SignUpModal />
+      </div>
+      <GlobalStyle />
+    </ThemeProvider>
+  );
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <App />,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
